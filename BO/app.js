@@ -1,13 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const mysql = require('mysql');
 const app = express();
 const port = 3001;
 
-const mysql = require('mysql');
 const connection = mysql.createConnection({
   host: 'localhost',
-  user: 'root',
+  user: 'express',
   password: 'root',
   database: 'dnd'
 });
@@ -63,6 +63,33 @@ app.post('/saveCharacter', (req, res) => {
   });
 });
 
+app.get('/loadCharacters', (req, res) => {
+  const query = 'SELECT * FROM characters JOIN attributes ON characters.CharacterID = attributes.CharacterID';
+
+  connection.query(query, (err, results) => {
+    if (err) {
+      console.error('Error fetching characters:', err);
+      return res.status(500).json({ message: 'Internal server error' });
+    }
+
+    const characters = results.map(row => ({
+      id: row.CharacterID,
+      name: row.Name,
+      classID: row.ClassID,
+      raceID: row.RaceID,
+      attributes: {
+        Strength: row.Strength,
+        Dexterity: row.Dexterity,
+        Constitution: row.Constitution,
+        Intelligence: row.Intelligence,
+        Wisdom: row.Wisdom,
+        Charisma: row.Charisma
+      }
+    }));
+
+    res.status(200).json({ characters });
+  });
+});
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
