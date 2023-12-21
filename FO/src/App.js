@@ -58,22 +58,24 @@ function App() {
   };
 
   const handleSaveCharacter = async () => {
-    if (name && characterClass && race) {
-      try {
-        const character = { name, characterClass, race, ...attributes };
-        await fetch('http://localhost:3000/saveCharacter', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(character),
-        });
-        alert('Character saved successfully!');
-      } catch (error) {
-        console.error('Error saving character:', error);
-      }
-    } else {
-      alert('Please create a character first.');
+    const characterData = {
+      name,
+      classID: classes.indexOf(characterClass) + 1,
+      raceID: races.indexOf(race) + 1,
+      attributes
+    };
+
+    try {
+      await fetch('http://localhost:3001/saveCharacter', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(characterData),
+      });
+      alert('Character saved successfully!');
+    } catch (error) {
+      console.error('Error saving character:', error);
     }
   };
 
@@ -100,7 +102,6 @@ function App() {
           </select>
         </div>
         <button type="submit">Create Character</button>
-        
       </form>
 
       {attributes.Strength > 0 && (
