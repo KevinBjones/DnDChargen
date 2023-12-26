@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  dnd-express:
+    build:
+      context: /var/www/html/dnd/BO
+      dockerfile: Dockerfile
+    container_name: dnd-express
+    ports:
+      - "3001:3001" 

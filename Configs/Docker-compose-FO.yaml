@@ -3,7 +3,7 @@ version: '3.8'
 services:
   dnd-fo:
     build:
-      context: .
+      context: /var/www/html/dnd/FO
       dockerfile: Dockerfile
     container_name: dnd-fo
     ports:
