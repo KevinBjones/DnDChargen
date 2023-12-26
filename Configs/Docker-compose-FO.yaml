@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  dnd-fo:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: dnd-fo
+    ports:
+      - "443:443"
+    volumes:
+      - /etc/ssl/certs/nginx-selfsigned.crt:/etc/ssl/certs/nginx-selfsigned.crt
+      - /etc/ssl/private/nginx-selfsigned.key:/etc/ssl/private/nginx-selfsigned.key
+      - /etc/ssl/certs/dhparam.pem:/etc/ssl/certs/dhparam.pem
