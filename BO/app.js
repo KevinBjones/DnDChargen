@@ -29,7 +29,7 @@ app.post('/saveCharacter', (req, res) => {
       return res.status(500).json({ message: 'Internal server error' });
     }
 
-    const charQuery = 'INSERT INTO Characters (Name, ClassID, RaceID) VALUES (?, ?, ?)';
+    const charQuery = 'INSERT INTO characters (Name, ClassID, RaceID) VALUES (?, ?, ?)';
     connection.query(charQuery, [name, classID, raceID], (err, charResult) => {
       if (err) {
         console.error('An error occurred in character creation:', err);
@@ -39,7 +39,7 @@ app.post('/saveCharacter', (req, res) => {
       }
 
       const characterID = charResult.insertId;
-      const attrQuery = 'INSERT INTO Attributes (CharacterID, Strength, Dexterity, Constitution, Intelligence, Wisdom, Charisma) VALUES (?, ?, ?, ?, ?, ?, ?)';
+      const attrQuery = 'INSERT INTO attributes (CharacterID, Strength, Dexterity, Constitution, Intelligence, Wisdom, Charisma) VALUES (?, ?, ?, ?, ?, ?, ?)';
       connection.query(attrQuery, [characterID, attributes.Strength, attributes.Dexterity, attributes.Constitution, attributes.Intelligence, attributes.Wisdom, attributes.Charisma], (attrErr) => {
         if (attrErr) {
           console.error('An error occurred in attributes insertion:', attrErr);
