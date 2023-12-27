@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dnd-phpmyadmin-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dnd-phpmyadmin
+  template:
+    metadata:
+      labels:
+        app: dnd-phpmyadmin
+    spec:
+      containers:
+      - name: dnd-phpmyadmin
+        image: phpmyadmin/phpmyadmin:latest
+        env:
+        - name: PMA_HOST
+          value: "dnd-mysql-service"
+        - name: PMA_PORT
+          value: "3306"
+        ports:
+        - containerPort: 80

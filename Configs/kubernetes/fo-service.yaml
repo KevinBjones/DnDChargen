@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: dnd-fo-service
+spec:
+  selector:
+    app: dnd-fo
+  ports:
+    - protocol: TCP
+      port: 443
+      targetPort: 443
+  type: NodePort

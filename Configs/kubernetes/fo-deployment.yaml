@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dnd-fo-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dnd-fo
+  template:
+    metadata:
+      labels:
+        app: dnd-fo
+    spec:
+      containers:
+      - name: dnd-fo
+        imagePullPolicy: IfNotPresent
+        image: dnd-fo:latest
+        ports:
+        - containerPort: 443
+        volumeMounts:
+        - name: ssl-cert
+          mountPath: /etc/ssl/certs/nginx-selfsigned.crt
+          subPath: nginx-selfsigned.crt
+          readOnly: true
+        - name: ssl-key
+          mountPath: /etc/ssl/private/nginx-selfsigned.key
+          subPath: nginx-selfsigned.key
+          readOnly: true
+        - name: dhparam
+          mountPath: /etc/ssl/certs/dhparam.pem
+          subPath: dhparam.pem
+          readOnly: true
+      volumes:
+      - name: ssl-cert
+        secret:
+          secretName: my-tls-secret
+          items:
+          - key: nginx-selfsigned.crt
+            path: nginx-selfsigned.crt
+      - name: ssl-key
+        secret:
+          secretName: my-tls-secret
+          items:
+          - key: nginx-selfsigned.key
+            path: nginx-selfsigned.key
+      - name: dhparam
+        secret:
+          secretName: my-tls-secret
+          items:
+          - key: dhparam.pem
+            path: dhparam.pem

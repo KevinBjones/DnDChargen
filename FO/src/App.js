@@ -20,7 +20,7 @@ function App() {
   const races = ['Human', 'Elf', 'Dwarf', 'Halfling', 'Gnome', 'Dragonborn', 'Half-Elf', 'Half-Orc', 'Tiefling'];
 
   useEffect(() => {
-    fetch('http://localhost:3001/loadCharacters')
+    fetch('/loadCharacters')
       .then(response => response.json())
       .then(data => {
         if (data && data.characters) {
@@ -98,7 +98,7 @@ function App() {
     };
 
     try {
-      await fetch('http://localhost:3001/saveCharacter', {
+      await fetch('/saveCharacter', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

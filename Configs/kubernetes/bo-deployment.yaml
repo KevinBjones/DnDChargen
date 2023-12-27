@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dnd-express-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dnd-express
+  template:
+    metadata:
+      labels:
+        app: dnd-express
+    spec:
+      containers:
+      - name: dnd-express
+        imagePullPolicy: IfNotPresent
+        image: dnd-express:latest
+        ports:
+        - containerPort: 3001
