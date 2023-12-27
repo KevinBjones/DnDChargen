@@ -5,6 +5,7 @@ services:
     build:
       context: /var/dnd/FO
       dockerfile: Dockerfile
+    image: dnd-fo
     container_name: dnd-fo
     ports:
       - "443:443"
@@ -18,6 +19,7 @@ services:
     build:
       context: /var/dnd/BO
       dockerfile: Dockerfile
+    image: dnd-express
     container_name: dnd-express
     ports:
       - "3001:3001" 
