@@ -9,10 +9,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - 192.168.1.65
+    - dndchargen.local
     secretName: my-tls-secret
   rules:
-  - host: 192.168.1.65
+  - host: dndchargen.local
     http:
       paths:
       - path: /
