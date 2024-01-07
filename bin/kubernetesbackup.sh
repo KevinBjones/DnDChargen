@@ -10,13 +10,19 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-kubectl exec $POD_NAME -n $NAMESPACE -- /usr/bin/mysqldump -u $DB_USER -p$DB_PASSWORD $DB_NAME > $BACKUP_DIR/db_backup_$DATE.sql
+kubectl exec $POD_NAME -n $NAMESPACE -- /usr/bin/mysqldump -u $DB_USER -p$DB_PASSWORD $DB_NAME > $BACKUP_DIR/db_backup_complete_$DATE.sql
 if [ $? -ne 0 ]; then
     echo "Database backup command failed" >&2
     exit 1
 fi
 
-kubectl exec $POD_NAME -n $NAMESPACE -- /usr/bin/mysqldump -u $DB_USER -p$DB_PASSWORD mysql user db > $BACKUP_DIR/db_users_backup_$DATE.sql
+kubectl exec $POD_NAME -n $NAMESPACE -- /usr/bin/mysqldump -u $DB_USER -p$DB_PASSWORD $DB_NAME > $BACKUP_DIR/db_backup_dnd_$DATE.sql
+if [ $? -ne 0 ]; then
+    echo "Database backup command failed" >&2
+    exit 1
+fi
+
+kubectl exec $POD_NAME -n $NAMESPACE -- /usr/bin/mysqldump -u $DB_USER -p$DB_PASSWORD mysql user db > $BACKUP_DIR/db_backup_users$DATE.sql
 if [ $? -ne 0 ]; then
     echo "User backup command failed" >&2
     exit 1
