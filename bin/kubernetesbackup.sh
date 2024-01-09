@@ -27,3 +27,12 @@ if [ $? -ne 0 ]; then
     echo "User backup command failed" >&2
     exit 1
 fi
+
+BINARY_LOG_DIR="/var/lib/mysql" 
+BINARY_LOG_BACKUP_DIR="$BACKUP_DIR/binary_logs_$DATE"
+mkdir -p $BINARY_LOG_BACKUP_DIR
+kubectl cp $NAMESPACE/$POD_NAME:$BINARY_LOG_DIR $BINARY_LOG_BACKUP_DIR
+if [ $? -ne 0 ]; then
+    echo "Binary log backup command failed" >&2
+    exit 1
+fi
